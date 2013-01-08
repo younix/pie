@@ -25,22 +25,60 @@
  * values for how this could work out.
  */
 
+#define _XOPEN_SOURCE 500
+
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <math.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define DEG2RAD(a) ((M_PI / 180.0) * (a))
 
+void
+usage(void)
+{
+	fprintf(stderr, "pie [-o OUTPUTFILE] NUM NUM NUM ...\n");
+	exit(EXIT_FAILURE);
+}
+
 int
 main(int argc, char **argv)
 {
-	int data[argc - 1];
+//	char colours = "#4e9a06","#a40000","#204a87","#5c3566","#ce5c00";
+//	char colours = "#73d216","#cc0000","#3465a4","#75507b","#f57900";
+	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e"};
 
 	/* canvas size */
 	int width = 400;
 	int height = 400;
+
+	int ch, fd;
+	while ((ch = getopt(argc, argv, "o:")) != -1) {
+		switch (ch) {
+		case 'o':
+			if ((fd = open(optarg, O_WRONLY|O_CREAT,
+					S_IWGRP|S_IWOTH)) == -1) {
+				perror(optarg);
+				exit(EXIT_FAILURE);
+			}
+
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+			break;
+		default:
+			usage();
+			/* NOTREACHED */
+		}
+	}
+	argc -= optind;
+	argv += optind;
+
+	int data[argc - 1];
 
 	/* centre of the pie chart */
 	double centerx = width / 2;
@@ -70,10 +108,6 @@ main(int argc, char **argv)
 		"<title>%s</title>\n"
 		"<desc>%s</desc>\n",
 		width, height, title, desc);
-
-//	char colours = "#4e9a06","#a40000","#204a87","#5c3566","#ce5c00";
-//	char colours = "#73d216","#cc0000","#3465a4","#75507b","#f57900";
-	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e"};
 
 	int max = argc - 1;
 	int sum = 0;
