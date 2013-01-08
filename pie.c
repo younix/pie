@@ -43,7 +43,10 @@
 void
 usage(void)
 {
-	fprintf(stderr, "pie [-o OUTPUTFILE] NUM NUM NUM ...\n");
+	fprintf(stderr, "pie [-o OUTPUTFILE] NUM NUM NUM ...\n"
+			"	-t TITLE	Title of the chart.\n"
+			"	-d DESCRIPTION	Description of the chart.\n"
+			"	-o FILE		Output file for SVG data.\n");
 	exit(EXIT_FAILURE);
 }
 
@@ -53,6 +56,7 @@ main(int argc, char **argv)
 //	char colours = "#4e9a06","#a40000","#204a87","#5c3566","#ce5c00";
 //	char colours = "#73d216","#cc0000","#3465a4","#75507b","#f57900";
 	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e"};
+	int max_colors = sizeof(colors) / sizeof(colors[0]);
 
 	/* canvas size */
 	int width = 400;
@@ -87,6 +91,15 @@ main(int argc, char **argv)
 	}
 	argc -= optind;
 	argv += optind;
+
+	if (argc > max_colors) {
+		fprintf(stderr, "Too mutch data. "
+			"Maximum of %d numbers are posibile.\n", max_colors);
+		exit(EXIT_FAILURE);
+	} else if (argc < 1) {
+		fprintf(stderr, "no data found.\n");
+		exit(EXIT_FAILURE);
+	}
 
 	int data[argc];
 
