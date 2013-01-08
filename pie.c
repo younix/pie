@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include <string.h>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -57,8 +58,11 @@ main(int argc, char **argv)
 	int width = 400;
 	int height = 400;
 
+	char *title = "Pie chart";
+	char *desc = "Picture of a pie chart";
+
 	int ch, fd;
-	while ((ch = getopt(argc, argv, "o:")) != -1) {
+	while ((ch = getopt(argc, argv, "o:t:d:")) != -1) {
 		switch (ch) {
 		case 'o':
 			if ((fd = open(optarg, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR
@@ -69,6 +73,12 @@ main(int argc, char **argv)
 
 			dup2(fd, STDOUT_FILENO);
 			close(fd);
+			break;
+		case 't':
+			title = strdup(optarg);
+			break;
+		case 'd':
+			desc = strdup(optarg);
 			break;
 		default:
 			usage();
@@ -97,9 +107,6 @@ main(int argc, char **argv)
 	}
 
 	/* Draw and output the SVG file. */
-	char *title = "Pie chart";
-	char *desc = "Picture of a pie chart";
-
 	printf( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
 		"<svg xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
 		"	xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"\n"
