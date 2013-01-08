@@ -17,6 +17,7 @@
 
 /*
  * Branko Collin:
+ * 
  * Working with relative values confused me, so I worked with absolute ones 
  * instead. Generally this should not be a problem, as the only relative values
  * you need are the chart's centre coordinates and its radius, and these are a
