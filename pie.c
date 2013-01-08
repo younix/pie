@@ -61,8 +61,8 @@ main(int argc, char **argv)
 	while ((ch = getopt(argc, argv, "o:")) != -1) {
 		switch (ch) {
 		case 'o':
-			if ((fd = open(optarg, O_WRONLY|O_CREAT,
-					S_IWGRP|S_IWOTH)) == -1) {
+			if ((fd = open(optarg, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR
+				|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)) == -1) {
 				perror(optarg);
 				exit(EXIT_FAILURE);
 			}
