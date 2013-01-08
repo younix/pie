@@ -1,4 +1,4 @@
 pie
 ===
 
-command line pie chart creation tool
+A small C program that draws a pie chart in SVG format.
