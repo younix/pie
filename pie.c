@@ -104,7 +104,6 @@ main(int argc, char **argv)
 		"<svg xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
 		"	xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"\n"
 		"	width=\"%d\" height=\"%d\" id=\"svg2\">\n"
-		"\n"
 		"<title>%s</title>\n"
 		"<desc>%s</desc>\n",
 		width, height, title, desc);
@@ -153,7 +152,7 @@ main(int argc, char **argv)
 		oldangle = angle;
 	}
 
-	printf("\n</svg>\n");
+	printf("</svg>\n");
 
 	return EXIT_SUCCESS;
 }
