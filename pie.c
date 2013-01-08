@@ -78,7 +78,7 @@ main(int argc, char **argv)
 	argc -= optind;
 	argv += optind;
 
-	int data[argc - 1];
+	int data[argc];
 
 	/* centre of the pie chart */
 	double centerx = width / 2;
@@ -109,11 +109,11 @@ main(int argc, char **argv)
 		"<desc>%s</desc>\n",
 		width, height, title, desc);
 
-	int max = argc - 1;
+	int max = argc;
 	int sum = 0;
-	for (int i = 1; i < argc; i++) {
-		data[i - 1] = strtol(argv[i], NULL, 10);
-		sum += data[i - 1];
+	for (int i = 0; i < argc; i++) {
+		data[i] = strtol(argv[i], NULL, 10);
+		sum += data[i];
 	}
 	double deg = sum / 360.0;	/* one degree */
 	double jung = sum / 2.0;	/* necessary to test for arc type */
