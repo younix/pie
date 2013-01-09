@@ -59,7 +59,7 @@ main(int argc, char **argv)
 	char *color[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e",
 			 "#4e9a06", "#a40000", "#204a87", "#5c3566", "#ce5c00",
 			 "#73d216", "#cc0000", "#3465a4", "#75507b", "#f57900"};
-	int max_colors = sizeof(colors) / sizeof(colors[0]);
+	int max_colors = sizeof(color) / sizeof(color[0]);
 
 	/* canvas size */
 	int width = 400;
