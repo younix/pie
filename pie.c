@@ -55,6 +55,7 @@ usage(void)
 int
 main(int argc, char **argv)
 {
+	/* colors from the Tango Desktop Projekt */
 	char *color[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e",
 			 "#4e9a06", "#a40000", "#204a87", "#5c3566", "#ce5c00",
 			 "#73d216", "#cc0000", "#3465a4", "#75507b", "#f57900"};
@@ -143,8 +144,8 @@ main(int argc, char **argv)
 	double jung = sum / 2.0;	/* necessary to test for arc type */
 
 	/* Data for grid, circle, and slices */ 
-	double dx = radius;	/* Starting point: */
-	double dy = 0.0;	/* first slice starts in the East */
+	double dx = radius;		/* Starting point: */
+	double dy = 0.0;		/* first slice starts in the East */
 	double oldangle = 0.0;
 
 	/* Loop through the slices */
@@ -171,9 +172,9 @@ main(int argc, char **argv)
 			" fill-opacity=\"1.0\" stroke-linejoin=\"round\" />\n",
 			centerx, centery, adx, ady, radius, radius, laf, ax, ay,
 			color[i]);
-		dx = x; // old end points become new starting point
-		dy = y; // id.
-		oldangle = angle;
+
+		/* old end points become new starting point */
+		dx = x; dy = y; oldangle = angle;
 	}
 
 	printf("</svg>\n");
