@@ -68,7 +68,7 @@ main(int argc, char **argv)
 	char *desc = "Picture of a pie chart";
 
 	int ch, fd;
-	while ((ch = getopt(argc, argv, "o:t:d:")) != -1) {
+	while ((ch = getopt(argc, argv, "o:t:d:w:h:")) != -1) {
 		switch (ch) {
 		case 'o':
 			if ((fd = open(optarg, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR
@@ -85,6 +85,12 @@ main(int argc, char **argv)
 			break;
 		case 'd':
 			desc = strdup(optarg);
+			break;
+		case 'w':
+			width = strtol(optarg, NULL, 10);
+			break;
+		case 'h':
+			height = strtol(optarg, NULL, 10);
 			break;
 		default:
 			usage();
