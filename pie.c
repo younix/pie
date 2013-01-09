@@ -43,7 +43,9 @@
 void
 usage(void)
 {
-	fprintf(stderr, "pie [-o OUTPUTFILE] NUM NUM NUM ...\n"
+	fprintf(stderr, "pie [OPTIONS] NUM ...\n"
+			"\n"
+			"OPTIONS:\n"
 			"	-t TITLE	Title of the chart.\n"
 			"	-d DESCRIPTION	Description of the chart.\n"
 			"	-o FILE		Output file for SVG data.\n");
@@ -53,9 +55,9 @@ usage(void)
 int
 main(int argc, char **argv)
 {
-//	char colours = "#4e9a06","#a40000","#204a87","#5c3566","#ce5c00";
-//	char colours = "#73d216","#cc0000","#3465a4","#75507b","#f57900";
-	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e"};
+	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e",
+			  "#4e9a06", "#a40000", "#204a87", "#5c3566", "#ce5c00",
+			  "#73d216", "#cc0000", "#3465a4", "#75507b", "#f57900"};
 	int max_colors = sizeof(colors) / sizeof(colors[0]);
 
 	/* canvas size */
@@ -97,8 +99,8 @@ main(int argc, char **argv)
 			"Maximum of %d numbers are posibile.\n", max_colors);
 		exit(EXIT_FAILURE);
 	} else if (argc < 1) {
-		fprintf(stderr, "no data found.\n");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "no numbers found.\n");
+		usage();
 	}
 
 	int data[argc];
@@ -106,9 +108,6 @@ main(int argc, char **argv)
 	/* centre of the pie chart */
 	double centerx = width / 2;
 	double centery = height / 2;
-
-	double cx = 200.0;
-	double cy = 200.0;
 
 	int laf = 0;
 
@@ -122,15 +121,15 @@ main(int argc, char **argv)
 	/* Draw and output the SVG file. */
 	printf( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
 		"<svg xmlns:svg=\"http://www.w3.org/2000/svg\"\n"
-		"	xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"\n"
-		"	width=\"%d\" height=\"%d\" id=\"svg2\">\n"
-		"<title>%s</title>\n"
-		"<desc>%s</desc>\n",
+		"    xmlns=\"http://www.w3.org/2000/svg\" version=\"1.0\"\n"
+		"    width=\"%d\" height=\"%d\" id=\"svg2\">\n"
+		"\t<title>%s</title>\n"
+		"\t<desc>%s</desc>\n",
 		width, height, title, desc);
 
 	int max = argc;
 	int sum = 0;
-	for (int i = 0; i < argc; i++) {
+	for (int i = 0; i < max; i++) {
 		data[i] = strtol(argv[i], NULL, 10);
 		sum += data[i];
 	}
@@ -155,18 +154,19 @@ main(int argc, char **argv)
 		else
 			laf = 0;
 
-		double ax = cx + x;	/* absolute x  */
-		double ay = cy + y;	/* absolute y  */
-		double adx = cx + dx;	/* absolute dx */
-		double ady = cy + dy;	/* absolute dy */
+		double ax  = centerx + x;	/* absolute x  */
+		double ay  = centery + y;	/* absolute y  */
+		double adx = centerx + dx;	/* absolute dx */
+		double ady = centery + dy;	/* absolute dy */
 
-		printf( "<path d=\"M%f,%f"	/* move cursor to center */
+		printf( "\t<path d=\"M%f,%f"	/* move cursor to center */
 			" L%f,%f"		/* draw line away from cursor */
 			" A%f,%f 0 %d,1 %f,%f"	/* draw arc */
 			" z\""			/* z = close path */
 			" fill=\"%s\" stroke=\"#FFFFFF\" stroke-width=\"3\""
 			" fill-opacity=\"1.0\" stroke-linejoin=\"round\" />\n",
-			cx, cy, adx, ady, radius, radius, laf, ax, ay, color);
+			centerx, centery, adx, ady, radius, radius, laf, ax, ay,
+			color);
 		dx = x; // old end points become new starting point
 		dy = y; // id.
 		oldangle = angle;
