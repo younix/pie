@@ -55,9 +55,9 @@ usage(void)
 int
 main(int argc, char **argv)
 {
-	char *colors[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e",
-			  "#4e9a06", "#a40000", "#204a87", "#5c3566", "#ce5c00",
-			  "#73d216", "#cc0000", "#3465a4", "#75507b", "#f57900"};
+	char *color[] = {"#8ae234", "#ef2929", "#729fcf", "#ad7fa8", "#fcaf3e",
+			 "#4e9a06", "#a40000", "#204a87", "#5c3566", "#ce5c00",
+			 "#73d216", "#cc0000", "#3465a4", "#75507b", "#f57900"};
 	int max_colors = sizeof(colors) / sizeof(colors[0]);
 
 	/* canvas size */
@@ -153,8 +153,6 @@ main(int argc, char **argv)
 		double x = cos(DEG2RAD(angle)) * radius; /* x of arc's end point */
 		double y = sin(DEG2RAD(angle)) * radius; /* y of arc's end point */
 
-		char *color = colors[i];
-
 		if (data[i] > jung)
 			laf = 1;	/* arc spans more than 180 degrees */
 		else
@@ -172,7 +170,7 @@ main(int argc, char **argv)
 			" fill=\"%s\" stroke=\"#FFFFFF\" stroke-width=\"3\""
 			" fill-opacity=\"1.0\" stroke-linejoin=\"round\" />\n",
 			centerx, centery, adx, ady, radius, radius, laf, ax, ay,
-			color);
+			color[i]);
 		dx = x; // old end points become new starting point
 		dy = y; // id.
 		oldangle = angle;
