@@ -138,6 +138,10 @@ main(int argc, char **argv)
 	int sum = 0;
 	for (int i = 0; i < max; i++) {
 		data[i] = strtol(argv[i], NULL, 10);
+		if (data[i] < 0) {
+			fprintf("negative input number\n");
+			exit(EXIT_FAILURE);
+		}
 		sum += data[i];
 	}
 	double deg = sum / 360.0;	/* one degree */
