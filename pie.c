@@ -139,7 +139,7 @@ main(int argc, char **argv)
 	for (int i = 0; i < max; i++) {
 		data[i] = strtol(argv[i], NULL, 10);
 		if (data[i] < 0) {
-			fprintf("negative input number\n");
+			fprintf(stderr, "negative input number\n");
 			exit(EXIT_FAILURE);
 		}
 		sum += data[i];
