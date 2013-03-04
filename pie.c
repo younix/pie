@@ -25,7 +25,7 @@
  * values for how this could work out.
  */
 
-#define _XOPEN_SOURCE 500
+#define _XOPEN_SOURCE 700
 
 #include <stdio.h>
 #include <limits.h>
